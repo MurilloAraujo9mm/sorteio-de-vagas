@@ -175,8 +175,7 @@ function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3) {
             const vaga2 = vagasSorteadasDuplas[i + 1];
             const unidade1 = unidadesDuplas[i];
             const unidade2 = unidadesDuplas[i + 1];
-            // appendToList(vagasDuplasList, `Vaga Dupla ${vaga1} e ${vaga2}: <span class="destaque">${unidade1}</span> e <span class="destaque">${unidade2}</span>`);
-            appendToList(vagasDuplasList, `Vaga Dupla ${vaga1} e ${vaga2}: <span class="destaque">${unidade1}</span>`);
+            appendToList(vagasDuplasList, `Vaga Dupla ${vaga1} e ${vaga2}: <span class="destaque">${unidade1}</span> `);
         }
 
         const totalTriplasASortear = maxVagasTriplas * 3;

@@ -150,8 +150,23 @@ function gerarNumerosUnicos(max, quantidade) {
 }
 
 
+let contadorDeGruposIndividuais = 1;
+let contadorDeGruposDuplas = 1;
+let contadorDeGruposTriplas = 1;
 
-function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3, maxVagasIndividuais = 3) {
+function getContagemSorteada(tipo) {
+    if (tipo === "individual") {
+        return `Grupo ${contadorDeGruposIndividuais++}`;
+    } else if (tipo === "dupla") {
+        return `Grupo ${contadorDeGruposDuplas++}`;
+    } else if (tipo === "tripla") {
+        return `Grupo ${contadorDeGruposTriplas++}`;
+    }
+}
+
+
+
+function realizarSorteio(maxVagasDuplas = 15, maxVagasTriplas = 3, maxVagasIndividuais = 7) {
     resetSorteio();
     mostrarContador(() => {
         const vagasIndividuaisList = document.getElementById("vagasIndividuais");
@@ -165,6 +180,7 @@ function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3, maxVagasIndivi
         const unidadesDuplas = [];
         const unidadesTriplas = [];
 
+
         embaralharArray(vagasDuplas);
         embaralharArray(vagasTriplas);
         embaralharArray(vagasIndividuais);
@@ -177,21 +193,13 @@ function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3, maxVagasIndivi
         const totalIndividuaisASortear = maxVagasIndividuais;
         const vagasSorteadasIndividuais = vagasDisponiveisIndividuais.splice(0, totalIndividuaisASortear);
 
-        for (let i = 0; i < vagasSorteadasIndividuais.length; i++) {
-            const unidade1 = `Grupo ${vagasDisponiveisIndividuais.pop()}`;
-            const unidade2 = `Grupo ${vagasDisponiveisIndividuais.pop()}`;
-
-            unidadesIndividuais.push(unidade1);
-            unidadesIndividuais.push(unidade2);
+        for (let i = 0; i < totalIndividuaisASortear; i++) {
+            const vaga1 = vagasSorteadasIndividuais[i];
+            const unidade1 = getContagemSorteada("individual");
+            appendToList(vagasIndividuaisList, `Vaga Individual ${vaga1}: <span class="destaque">${unidade1}</span>`);
         }
 
         embaralharArray(vagasSorteadasIndividuais);
-
-        for (let i = 0; i < vagasSorteadasIndividuais.length; i++) {
-            const vaga1 = vagasSorteadasIndividuais[i];
-            const unidade1 = unidadesIndividuais[i];
-            appendToList(vagasIndividuaisList, `Vaga Individual ${vaga1}: <span class="destaque">${unidade1}</span>`);
-        }
 
         // vagas duplas
         const totalDuplasASortear = maxVagasDuplas * 2;
@@ -199,12 +207,10 @@ function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3, maxVagasIndivi
 
         for (let i = 0; i < vagasSorteadasDuplas.length; i += 2) {
             if (i + 1 < vagasSorteadasDuplas.length) {
-
-                const unidade1 = `Grupo ${vagasDisponiveisDuplas.pop()}`;
-                const unidade2 = `Grupo ${vagasDisponiveisDuplas.pop()}`;
-
-                unidadesDuplas.push(unidade1);
-                unidadesDuplas.push(unidade2);
+                const vaga1 = vagasSorteadasDuplas[i];
+                const vaga2 = vagasSorteadasDuplas[i + 1];
+                const unidade = getContagemSorteada("dupla");
+                appendToList(vagasDuplasList, `Vaga Dupla ${vaga1} e ${vaga2}: <span class="destaque">${unidade}</span>`);
             }
         }
 
@@ -215,8 +221,12 @@ function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3, maxVagasIndivi
             const vaga2 = vagasSorteadasDuplas[i + 1];
             const unidade1 = unidadesDuplas[i];
             const unidade2 = unidadesDuplas[i + 1];
+            // appendToList(vagasDuplasList, `Vaga Dupla ${vaga1} e ${vaga2}: <span class="destaque">${unidade1}</span> e <span class="destaque">${unidade2}</span>`);
             appendToList(vagasDuplasList, `Vaga Dupla ${vaga1} e ${vaga2}: <span class="destaque">${unidade1}</span>`);
         }
+
+
+        embaralharArray(unidadesDuplas);
 
         // vagas triplas
         const totalTriplasASortear = maxVagasTriplas * 3;
@@ -227,16 +237,10 @@ function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3, maxVagasIndivi
                 const vaga1 = vagasSorteadasTriplas[i];
                 const vaga2 = vagasSorteadasTriplas[i + 1];
                 const vaga3 = vagasSorteadasTriplas[i + 2];
-                const unidade1 = `Grupo ${vaga1}`;
-                const unidade2 = `Grupo ${vaga2}`;
-                const unidade3 = `Grupo ${vaga3}`;
-
-                unidadesTriplas.push(unidade1);
-                unidadesTriplas.push(unidade2);
-                unidadesTriplas.push(unidade3);
+                const unidade = getContagemSorteada("tripla");
+                appendToList(vagasTriplasList, `Vaga Tripla ${vaga1}, ${vaga2}, e ${vaga3}: <span class="destaque">${unidade}</span>`);
             }
         }
-
         embaralharArray(unidadesTriplas);
 
         for (let i = 0; i < unidadesTriplas.length; i += 3) {
@@ -246,11 +250,11 @@ function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3, maxVagasIndivi
                 const vaga3 = vagasSorteadasTriplas[i + 2];
                 const unidade1 = unidadesTriplas[i];
 
+                // appendToList(vagasTriplasList, `Vaga Tripla ${vaga1}, ${vaga2}, e ${vaga3}: <span class="destaque">${unidade1}</span>, <span class="destaque">${unidade2}</span>, e <span class="destaque">${unidade3}</span>`);
                 appendToList(vagasTriplasList, `Vaga Tripla ${vaga1}, ${vaga2}, e ${vaga3}: <span class="destaque">${unidade1}</span>`);
             }
         }
 
-        // Vagas remanescentes
         vagasDisponiveisDuplas.forEach(vaga => {
             appendToList(vagasRemanescentesDuplasList, `Vaga Remanescente: <span class="destaque-verde">${vaga}</span>`);
         });
@@ -262,7 +266,6 @@ function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3, maxVagasIndivi
         vagasDisponiveisIndividuais.forEach(vaga => {
             appendToList(vagasRemanescentesIndividuaisList, `Vaga Remanescente: <span class="destaque-verde">${vaga}</span>`);
         });
-
         document.querySelector(".search-box").style.display = "block";
     });
 }
