@@ -150,17 +150,25 @@ function gerarNumerosUnicos(max, quantidade) {
 }
 
 
-let contadorDeGruposIndividuais = 1;
-let contadorDeGruposDuplas = 1;
-let contadorDeGruposTriplas = 1;
+let maxGruposIndividuais = 30; 
+let maxGruposDuplas = 30; 
+let maxGruposTriplas = 10;
+
+let gruposIndividuais = Array.from({ length: maxGruposIndividuais }, (_, i) => `Grupo ${i + 1}`);
+let gruposDuplas = Array.from({ length: maxGruposDuplas }, (_, i) => `Grupo ${i + 1}`);
+let gruposTriplas = Array.from({ length: maxGruposTriplas }, (_, i) => `Grupo ${i + 1}`);
+
+embaralharArray(gruposIndividuais);
+embaralharArray(gruposDuplas);
+embaralharArray(gruposTriplas);
 
 function getContagemSorteada(tipo) {
     if (tipo === "individual") {
-        return `Grupo ${contadorDeGruposIndividuais++}`;
+        return gruposIndividuais.shift();
     } else if (tipo === "dupla") {
-        return `Grupo ${contadorDeGruposDuplas++}`;
+        return gruposDuplas.shift();
     } else if (tipo === "tripla") {
-        return `Grupo ${contadorDeGruposTriplas++}`;
+        return gruposTriplas.shift();
     }
 }
 
