@@ -171,8 +171,8 @@ function realizarSorteio(maxVagasDuplas = 5, maxVagasTriplas = 3) {
         const unidadesDuplas = [];
         const unidadesTriplas = [];
 
-        embaralharArray(vagasDuplas);
-        embaralharArray(vagasTriplas);
+        // embaralharArray(vagasDuplas);
+        // embaralharArray(vagasTriplas);
 
         const vagasDisponiveisDuplas = [...vagasDuplas];
         const vagasDisponiveisTriplas = [...vagasTriplas];
@@ -190,7 +190,7 @@ function realizarSorteio(maxVagasDuplas = 5, maxVagasTriplas = 3) {
             }
         }
 
-        embaralharArray(unidadesDuplas);
+        // embaralharArray(unidadesDuplas);
 
         for (let i = 0; i < unidadesDuplas.length; i += 2) {
             const vaga1 = vagasSorteadasDuplas[i];

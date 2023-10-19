@@ -188,9 +188,9 @@ function realizarSorteio(maxVagasDuplas = 15, maxVagasTriplas = 3, maxVagasIndiv
         const unidadesTriplas = [];
 
 
-        embaralharArray(vagasDuplas);
-        embaralharArray(vagasTriplas);
-        embaralharArray(vagasIndividuais);
+        // embaralharArray(vagasDuplas);
+        // embaralharArray(vagasTriplas);
+        // embaralharArray(vagasIndividuais);
 
         const vagasDisponiveisIndividuais = [...vagasIndividuais];
         const vagasDisponiveisDuplas = [...vagasDuplas];
