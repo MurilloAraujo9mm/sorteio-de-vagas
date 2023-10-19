@@ -165,8 +165,7 @@ function getContagemSorteada(tipo) {
 }
 
 
-
-function realizarSorteio(maxVagasDuplas = 15, maxVagasTriplas = 3, maxVagasIndividuais = 7) {
+function realizarSorteio(maxVagasDuplas = 15, maxVagasTriplas = 3, maxVagasIndividuais = 6) {
     resetSorteio();
     mostrarContador(() => {
         const vagasIndividuaisList = document.getElementById("vagasIndividuais");

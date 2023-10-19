@@ -20,6 +20,22 @@ const vagasTriplas = [
     62, 73, 74, 75, 76, 11231
 ];
 
+
+let contadorDeGruposIndividuais = 1;
+let contadorDeGruposDuplas = 1;
+let contadorDeGruposTriplas = 1;
+
+function getContagemSorteada(tipo) {
+    if (tipo === "individual") {
+        return `Grupo ${contadorDeGruposIndividuais++}`;
+    } else if (tipo === "dupla") {
+        return `Grupo ${contadorDeGruposDuplas++}`;
+    } else if (tipo === "tripla") {
+        return `Grupo ${contadorDeGruposTriplas++}`;
+    }
+}
+
+
 function playBeep() {
     const beep = new Audio("https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3");
     // beep.play();
@@ -136,7 +152,7 @@ function resetSorteio() {
     document.getElementById("vagasRemanescentesTriplas").innerHTML = "";
 }
 
-function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3) {
+function realizarSorteio(maxVagasDuplas = 5, maxVagasTriplas = 3) {
     resetSorteio();
     mostrarContador(() => {
         const vagasDuplasList = document.getElementById("vagasDuplas");
@@ -153,6 +169,7 @@ function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3) {
         const vagasDisponiveisDuplas = [...vagasDuplas];
         const vagasDisponiveisTriplas = [...vagasTriplas];
 
+        // vagas duplas
         const totalDuplasASortear = maxVagasDuplas * 2;
         const vagasSorteadasDuplas = vagasDisponiveisDuplas.splice(0, totalDuplasASortear);
 
@@ -160,11 +177,8 @@ function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3) {
             if (i + 1 < vagasSorteadasDuplas.length) {
                 const vaga1 = vagasSorteadasDuplas[i];
                 const vaga2 = vagasSorteadasDuplas[i + 1];
-                const unidade1 = `Grupo ${vagasDisponiveisDuplas.pop()}`;
-                const unidade2 = `Grupo ${vagasDisponiveisDuplas.pop()}`;
-
-                unidadesDuplas.push(unidade1);
-                unidadesDuplas.push(unidade2);
+                const unidade = getContagemSorteada("dupla");
+                appendToList(vagasDuplasList, `Vaga Dupla ${vaga1} e ${vaga2}: <span class="destaque">${unidade}</span>`);
             }
         }
 
@@ -186,13 +200,8 @@ function realizarSorteio(maxVagasDuplas = 3, maxVagasTriplas = 3) {
                 const vaga1 = vagasSorteadasTriplas[i];
                 const vaga2 = vagasSorteadasTriplas[i + 1];
                 const vaga3 = vagasSorteadasTriplas[i + 2];
-                const unidade1 = `Grupo ${vaga1}`;
-                const unidade2 = `Grupo ${vaga2}`;
-                const unidade3 = `Grupo ${vaga3}`;
-
-                unidadesTriplas.push(unidade1);
-                unidadesTriplas.push(unidade2);
-                unidadesTriplas.push(unidade3);
+                const unidade = getContagemSorteada("tripla");
+                appendToList(vagasTriplasList, `Vaga Tripla ${vaga1}, ${vaga2}, e ${vaga3}: <span class="destaque">${unidade}</span>`);
             }
         }
 
